@@ -1,0 +1,1 @@
+# This python script generates shortcuts for this rainmeter skin
