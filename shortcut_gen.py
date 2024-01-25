@@ -1,5 +1,7 @@
 # This python script generates shortcuts for this rainmeter skin
 
+from os import system
+
 header = """========================================================================
   ____  ____                            _       _   _              _ 
  / ___|/ ___|___  _ __ ___  _ __  _   _| |_ ___| \ | | ___ _ __ __| |
@@ -15,6 +17,10 @@ header = """====================================================================
 """
 
 print(header)
+
+path_to_rainmeter = "C:\Program Files\Rainmeter\Rainmeter.exe"
+
+rainmeter = lambda cmd: system(f"{path_to_rainmeter} {cmd}")
 
 # This gets the actual rainmeter style
 # For an entry
@@ -131,3 +137,14 @@ with open("Shortcut-Catalog",'r') as catalog:
             print("Writing Shortcuts...")
             writeShortcuts(catalog, menuFile)
             entry = catalog.readline()
+
+# Load Skins in First Tab
+rainmeter(f'!DeactivateConfig "OneLauncher" FirstLaunch.ini')
+rainmeter(f'!ActivateConfig "OneLauncher\IconBar" {tabs[0]}.ini')
+rainmeter(f'!ActivateConfig "OneLauncher\WidgetArea" {tabs[0]}.ini')
+rainmeter(f'!SetWallpaper "OneLauncher\@Resources\Wallpapers\{tabs[0]}.jpg" Fill')
+
+"""
+!ActivateConfig #widgetRoot# {menu}.ini
+!ActivateConfig #iconRoot# {menu}.ini
+!SetWallpaper #@#Wallpapers\{menu}.jpg Fill"""
