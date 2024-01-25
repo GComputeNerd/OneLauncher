@@ -1,6 +1,6 @@
 # This python script generates shortcuts for this rainmeter skin
 
-from os import system
+import os, subprocess
 
 header = """========================================================================
   ____  ____                            _       _   _              _ 
@@ -19,12 +19,13 @@ header = """====================================================================
 print(header)
 
 path_to_rainmeter = "C:\Program Files\Rainmeter\Rainmeter.exe"
-
-rainmeter = lambda cmd: system(f"{path_to_rainmeter} {cmd}")
+print(path_to_rainmeter)
+rainmeter = lambda cmd: os.system(f'"{path_to_rainmeter}" {cmd}')
 
 # This gets the actual rainmeter style
 # For an entry
 get_shortcut_style = lambda num, name, img_path, launch_cmd: f"""
+
 [App{num}Box]
 Meter=Shape
 Y={"24R" if num != 1 else 0}
@@ -50,7 +51,6 @@ X=55
 Y=3r
 MeterStyle=AppTextStyle
 Text="{name}"
-
 """
 
 get_icon_style = lambda menu,i: f"""
@@ -63,7 +63,6 @@ H=#buttonSize#
 ImageAlpha=130
 ImageName=#@#Images\{menu}.png
 LeftMouseDownAction=[!ActivateConfig #widgetRoot# {menu}.ini][!ActivateConfig #iconRoot# {menu}.ini][!SetWallpaper #@#Wallpapers\{menu}.jpg Fill]
-
 """
 
 get_selected_icon_style = lambda menu, i: f"""
@@ -74,7 +73,15 @@ Y=3
 X={"0" if i == 0 else "25R"}
 H=#buttonSize#
 ImageName=#@#Images\{menu}.png
+"""
 
+bounding_box = lambda n: f"""
+
+[BoundingBox]
+Meter=Image
+SolidColor=0,0,0,1
+W={50*n}
+H=45
 """
 
 def writeBoilerplate(menuFile):
@@ -97,6 +104,9 @@ def writeIcon(menuName, tabList):
         with open("boilerplates/icon_boilerplate", 'r') as boilerplate:
             print(f"Writing iconBar Boilerplate for {menuName}")
             iconBar.writelines(boilerplate.readlines())
+        
+        # Write Bounding Box
+        iconBar.write(bounding_box(len(tabList)))
 
         i = 0        
         while i < len(tabList):
@@ -119,32 +129,29 @@ for tab in tabs:
     print(f"Writing iconBar for {tab}...")
     writeIcon(tab, tabs)
 
-with open("Shortcut-Catalog",'r') as catalog:
-    entry = catalog.readline()
-    while entry: # entry is not Empty (EOF)
-        if entry[0] == '+':
-            # New Section Definition
-            menu = entry[1:-1] # Name of Section
-            print("Catalog For", menu, "Found!")
+catalog = open("Shortcut-Catalog",'r')
+entry = catalog.readline()
+while entry: # entry is not Empty (EOF)
+    if entry[0] == '+':
+        # New Section Definition
+        menu = entry[1:-1] # Name of Section
+        print("Catalog For", menu, "Found!")
 
-            # Open Section File
-            menuFile = open('WidgetArea/'+menu+".ini", 'w')
+        # Open Section File
+        menuFile = open('WidgetArea/'+menu+".ini", 'w')
 
-            # Write Boilerplate
-            print("Writing Boilerplate...")
-            writeBoilerplate(menuFile)
+        # Write Boilerplate
+        print("Writing Boilerplate...")
+        writeBoilerplate(menuFile)
 
-            print("Writing Shortcuts...")
-            writeShortcuts(catalog, menuFile)
-            entry = catalog.readline()
+        print("Writing Shortcuts...")
+        writeShortcuts(catalog, menuFile)
+        menuFile.close()
+        entry = catalog.readline()
+catalog.close()
 
 # Load Skins in First Tab
-rainmeter(f'!DeactivateConfig "OneLauncher" FirstLaunch.ini')
-rainmeter(f'!ActivateConfig "OneLauncher\IconBar" {tabs[0]}.ini')
-rainmeter(f'!ActivateConfig "OneLauncher\WidgetArea" {tabs[0]}.ini')
-rainmeter(f'!SetWallpaper "OneLauncher\@Resources\Wallpapers\{tabs[0]}.jpg" Fill')
-
-"""
-!ActivateConfig #widgetRoot# {menu}.ini
-!ActivateConfig #iconRoot# {menu}.ini
-!SetWallpaper #@#Wallpapers\{menu}.jpg Fill"""
+rainmeter(f'!DeactivateConfig OneLauncher FirstLaunch.ini')
+rainmeter(f'!ActivateConfig OneLauncher\IconBar {tabs[0]}.ini')
+rainmeter(f'!SetWallpaper OneLauncher\@Resources\Wallpapers\{tabs[0]}.jpg Fill')
+rainmeter(f'!ActivateConfig OneLauncher\WidgetArea {tabs[0]}.ini')

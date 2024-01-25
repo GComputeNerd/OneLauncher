@@ -9,9 +9,3 @@ Author=GComputeNerd
 buttonSize=40
 iconRoot="OneLauncher\IconBar"
 widgetRoot="OneLauncher\WidgetArea"
-
-[BoundingBox]
-Meter=Image
-SolidColor=0,0,0,1
-W=250
-H=45
