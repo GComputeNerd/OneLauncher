@@ -1,6 +1,9 @@
-# This python script generates shortcuts for this rainmeter skin
+"""
+This program generates the rainmeter skin code for OneLauncher.
+"""
 
-import os, subprocess
+from os import system
+from rainmeter_code import *
 
 header = """========================================================================
   ____  ____                            _       _   _              _ 
@@ -19,135 +22,76 @@ header = """====================================================================
 print(header)
 
 path_to_rainmeter = "C:\Program Files\Rainmeter\Rainmeter.exe"
-print(path_to_rainmeter)
-rainmeter = lambda cmd: os.system(f'"{path_to_rainmeter}" {cmd}')
-
-icon_boilerplate = lambda menu: f"""[Rainmeter]
-Update=1000
-AccurateText=1
-
-[Metadata]
-Author=GComputeNerd
-
-[Variables]
-buttonSize=40
-iconRoot="OneLauncher\IconBar"
-widgetRoot="OneLauncher\WidgetArea"
-
-[MeasureOnLoad]
-Measure=Calc
-Formula=Counter
-IfEqualValue=1
-IfEqualAction=!SetWallpaper #@#Wallpapers\{menu}.jpg Fill
-UpdateDivider=-1"""
-
-# This gets the actual rainmeter style
-# For an entry
-get_shortcut_style = lambda num, name, img_path, launch_cmd: f"""
-
-[App{num}Box]
-Meter=Shape
-Y={"24R" if num != 1 else 0}
-Shape=Rectangle 0,R,300,45,10 | extend Modifiers1 | extend Modifiers2
-Modifiers1=Fill color 0,0,0,100
-Modifiers2=strokewidth 1 | stroke color 255,255,255,180
-Modifiers3=strokewidth 3 | stroke color 255,255,255,180
-LeftMouseDownAction=[{launch_cmd.strip()}]
-MouseOverAction=!SetOption App{num}Box Shape "Rectangle 0,0,300,45,10 | extend Modifiers1 | extend Modifiers3"
-MouseLeaveAction=!SetOption App{num}Box Shape "Rectangle 0,0,300,45,10 | extend Modifiers1 | extend Modifiers2"
-
-[App{num}Icon]
-Meter=Image
-Y=8r
-X=15
-W=#buttonSize#
-H=#buttonSize#
-ImageName=#@#\Shortcuts\{img_path}
-
-[App{num}Text]
-Meter=String
-X=55
-Y=3r
-MeterStyle=AppTextStyle
-Text="{name}"
-"""
-
-get_icon_style = lambda menu,i: f"""
-
-[{menu}Icon]
-Meter=Image
-Y=3
-X={"0" if i == 0 else "25R"}
-H=#buttonSize#
-ImageAlpha=130
-ImageName=#@#Images\{menu}.png
-LeftMouseDownAction=[!ActivateConfig #widgetRoot# {menu}.ini][!ActivateConfig #iconRoot# {menu}.ini]
-"""
-
-get_selected_icon_style = lambda menu, i: f"""
-
-[{menu}Icon]
-Meter=Image
-Y=3
-X={"0" if i == 0 else "25R"}
-H=#buttonSize#
-ImageName=#@#Images\{menu}.png
-"""
-
-bounding_box = lambda n: f"""
-
-[BoundingBox]
-Meter=Image
-SolidColor=0,0,0,1
-W={50*n}
-H=45
-"""
-
-def writeWidgetBoilerplate(menuFile):
-    with open('boilerplates/widget_boilerplate', 'r') as boilerplate:
-        menuFile.writelines(boilerplate.readlines())
+rainmeter = lambda cmd: system(f'"{path_to_rainmeter}" {cmd}')
 
 def writeShortcuts(catalog, menuFile):
-    num = 1
-    entry = catalog.readline()
-    while entry and entry[0] == '-':
-        entry = entry[1:].split(',')
-        menuFile.write(get_shortcut_style(num, entry[0], entry[1], entry[2]))
-        print("Added", entry[0], "!")
-        num += 1
-        entry = catalog.readline()
+    """
+    This function writes the app shortcuts for a tab
 
-def writeIcon(menuName, tabList):
-    with open(f"IconBar/{menuName}.ini", 'w') as iconBar:
+    Arguments:
+        catalog (File) : Shortcut-Catalog file, with pointer said to first entry
+                        of Section.
+        menuFile (File) : WidgetArea .ini file, that is being written to.
+    """
+
+    num = 1 # Holds shortcut index
+    entry = catalog.readline()
+
+    while entry and entry[0] == '-': # Current line is an entry
+        entry = entry[1:].split(',') # Get data
+
+        # Add Shortcut into Widget File
+        menuFile.write(get_shortcut_style(num, entry[0], entry[1], entry[2]))
+
+        print("\tAdded", entry[0], "!")
+        
+        num += 1
+        entry = catalog.readline() # Get next entry
+
+def writeIcon(selected, tabList):
+    """
+    This function writes the iconBar when a given icon is selected
+
+    Arguments:
+        selected (str) : Name of tab that is selected
+        tabList (list) : List of all tabs in catalog
+    """
+
+    with open(f"IconBar/{selected}.ini", 'w') as iconBar:
         # Write boilerplate
-        print(f"Writing iconBar Boilerplate for {menuName}")
-        iconBar.write(icon_boilerplate(menuName))
+        iconBar.write(icon_boilerplate(selected))
         
         # Write Bounding Box
         iconBar.write(bounding_box(len(tabList)))
 
-        i = 0        
+        # Adding icons for current iconBar
+        i = 0 
         while i < len(tabList):
             tab = tabList[i]
-            if tab == menuName:
+            if tab == selected:
                 iconBar.write(get_selected_icon_style(tab, i))
             else:
                 iconBar.write(get_icon_style(tab, i))
             i += 1
 
 
-print("opening catalog")
-print("Reading Tabs")
+print("opening catalog...")
 tabs = []
-
 with open("Shortcut-Catalog", 'r') as catalog:
+    print("Reading Tabs...")
     tabs = [entry[1:].strip() for entry in catalog.readlines() if entry[0] == '+']
 
+print("WRITING ICONBARS")
+print("----------------")
 for tab in tabs:
-    print(f"Writing iconBar for {tab}...")
+    print(f"\tWriting iconBar for {tab}...")
     writeIcon(tab, tabs)
 
+print()
+print("WRITING SHORTCUTS")
+print("-----------------")
 catalog = open("Shortcut-Catalog",'r')
+
 entry = catalog.readline()
 while entry: # entry is not Empty (EOF)
     if entry[0] == '+':
@@ -159,10 +103,10 @@ while entry: # entry is not Empty (EOF)
         menuFile = open('WidgetArea/'+menu+".ini", 'w')
 
         # Write Boilerplate
-        print("Writing Boilerplate...")
-        writeWidgetBoilerplate(menuFile)
+        print("\tWriting Boilerplate...")
+        menuFile.write(widget_boilerplate)
 
-        print("Writing Shortcuts...")
+        print("\tWriting Shortcuts...")
         writeShortcuts(catalog, menuFile)
         menuFile.close()
         entry = catalog.readline()
