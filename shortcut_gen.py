@@ -72,7 +72,7 @@ ImageName=#@#Images\{menu}.png
 """
 
 def writeBoilerplate(menuFile):
-    with open('widget_boilerplate.ini', 'r') as boilerplate:
+    with open('widget_boilerplate', 'r') as boilerplate:
         menuFile.writelines(boilerplate.readlines())
 
 def writeShortcuts(catalog, menuFile):
@@ -88,7 +88,7 @@ def writeShortcuts(catalog, menuFile):
 def writeIcon(menuName, tabList):
     with open(f"IconBar/{menuName}.ini", 'w') as iconBar:
         # Write boilerplate
-        with open("icon_boilerplate.ini", 'r') as boilerplate:
+        with open("icon_boilerplate", 'r') as boilerplate:
             print(f"Writing iconBar Boilerplate for {menuName}")
             iconBar.writelines(boilerplate.readlines())
 
