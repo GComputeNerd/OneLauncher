@@ -13,4 +13,9 @@ There are two skins in this root config.
 -   IconBar
 -   WidgetArea
 
-IconBar is what you see in the top right, WidgetArea is what holds the shortcuts.
+IconBar is what you see in the top right, WidgetArea is what holds the shortcuts. You generate these using the `shortcut_gen.py` file.
+
+## How to Install
+
+1. Install Rainmeter, and make sure you can run python3.
+2. Download This Repository into wherever
