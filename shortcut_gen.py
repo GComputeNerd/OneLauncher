@@ -22,6 +22,25 @@ path_to_rainmeter = "C:\Program Files\Rainmeter\Rainmeter.exe"
 print(path_to_rainmeter)
 rainmeter = lambda cmd: os.system(f'"{path_to_rainmeter}" {cmd}')
 
+icon_boilerplate = lambda menu: f"""[Rainmeter]
+Update=1000
+AccurateText=1
+
+[Metadata]
+Author=GComputeNerd
+
+[Variables]
+buttonSize=40
+iconRoot="OneLauncher\IconBar"
+widgetRoot="OneLauncher\WidgetArea
+
+[MeasureOnLoad]
+Measure=Calc
+Formula=Counter
+IfEqualValue=1
+IfEqualAction=!SetWallpaper #@#Wallpapers\{menu}.jpg Fill
+UpdateDivider=-1"""
+
 # This gets the actual rainmeter style
 # For an entry
 get_shortcut_style = lambda num, name, img_path, launch_cmd: f"""
@@ -84,7 +103,7 @@ W={50*n}
 H=45
 """
 
-def writeBoilerplate(menuFile):
+def writeWidgetBoilerplate(menuFile):
     with open('boilerplates/widget_boilerplate', 'r') as boilerplate:
         menuFile.writelines(boilerplate.readlines())
 
@@ -101,9 +120,8 @@ def writeShortcuts(catalog, menuFile):
 def writeIcon(menuName, tabList):
     with open(f"IconBar/{menuName}.ini", 'w') as iconBar:
         # Write boilerplate
-        with open("boilerplates/icon_boilerplate", 'r') as boilerplate:
-            print(f"Writing iconBar Boilerplate for {menuName}")
-            iconBar.writelines(boilerplate.readlines())
+        print(f"Writing iconBar Boilerplate for {menuName}")
+        iconBar.write(icon_boilerplate(menuName))
         
         # Write Bounding Box
         iconBar.write(bounding_box(len(tabList)))
@@ -142,7 +160,7 @@ while entry: # entry is not Empty (EOF)
 
         # Write Boilerplate
         print("Writing Boilerplate...")
-        writeBoilerplate(menuFile)
+        writeWidgetBoilerplate(menuFile)
 
         print("Writing Shortcuts...")
         writeShortcuts(catalog, menuFile)
@@ -153,6 +171,5 @@ catalog.close()
 # Load Skins in First Tab
 rainmeter(f'!DeactivateConfig OneLauncher FirstLaunch.ini')
 rainmeter(f'!RefreshApp')
-rainmeter(f'!SetWallpaper OneLauncher\@Resources\Wallpapers\{tabs[0]}.jpg Fill')
 rainmeter(f'!ActivateConfig OneLauncher\IconBar {tabs[0]}.ini')
 rainmeter(f'!ActivateConfig OneLauncher\WidgetArea {tabs[0]}.ini')
