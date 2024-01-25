@@ -37,7 +37,7 @@ In the root folder, you will find a `Shortcut-Catalog` file. In this file, you w
 
 When you start a line with a `+`, that means You are making a new tab/section. i.e, To make a Game Tab. Write `+Game`.
 
-When you start a line with a `i`, that means you are cataloging an app shortcut that you want in this menu. You have to write this information seperated by commas, Without any spaces. For example, to add notepad, I might write.
+When you start a line with a `-`, that means you are cataloging an app shortcut that you want in this menu. You have to write this information seperated by commas, Without any spaces. For example, to add notepad, I might write.
 
 ```
 -Notepad,notepad.png,notepad.exe
