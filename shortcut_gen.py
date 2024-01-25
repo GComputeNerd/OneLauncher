@@ -152,6 +152,7 @@ catalog.close()
 
 # Load Skins in First Tab
 rainmeter(f'!DeactivateConfig OneLauncher FirstLaunch.ini')
-rainmeter(f'!ActivateConfig OneLauncher\IconBar {tabs[0]}.ini')
+rainmeter(f'!RefreshApp')
 rainmeter(f'!SetWallpaper OneLauncher\@Resources\Wallpapers\{tabs[0]}.jpg Fill')
+rainmeter(f'!ActivateConfig OneLauncher\IconBar {tabs[0]}.ini')
 rainmeter(f'!ActivateConfig OneLauncher\WidgetArea {tabs[0]}.ini')

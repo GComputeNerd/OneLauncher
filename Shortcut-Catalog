@@ -1,2 +1,6 @@
-+Game
--Notepad,notepad.png,notepad.exe
++Section1
+-App1Name,PathToImage,PathToShortcut
+-App2Name,PathToImage,PathToShortcut
+
++Section2
+-App1Name,PathToImage,PathToShortcut
