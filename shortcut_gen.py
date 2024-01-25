@@ -32,7 +32,7 @@ Author=GComputeNerd
 [Variables]
 buttonSize=40
 iconRoot="OneLauncher\IconBar"
-widgetRoot="OneLauncher\WidgetArea
+widgetRoot="OneLauncher\WidgetArea"
 
 [MeasureOnLoad]
 Measure=Calc
@@ -81,7 +81,7 @@ X={"0" if i == 0 else "25R"}
 H=#buttonSize#
 ImageAlpha=130
 ImageName=#@#Images\{menu}.png
-LeftMouseDownAction=[!ActivateConfig #widgetRoot# {menu}.ini][!ActivateConfig #iconRoot# {menu}.ini][!SetWallpaper #@#Wallpapers\{menu}.jpg Fill]
+LeftMouseDownAction=[!ActivateConfig #widgetRoot# {menu}.ini][!ActivateConfig #iconRoot# {menu}.ini]
 """
 
 get_selected_icon_style = lambda menu, i: f"""
