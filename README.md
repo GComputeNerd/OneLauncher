@@ -18,4 +18,4 @@ IconBar is what you see in the top right, WidgetArea is what holds the shortcuts
 ## How to Install
 
 1. Install Rainmeter, and make sure you can run python3.
-2. Download This Repository into wherever
+2. Download This Repository into Where your Rainmeter Skins are stored, and load FirstLaunch.ini
