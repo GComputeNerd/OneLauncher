@@ -18,7 +18,7 @@ print(header)
 
 # This gets the actual rainmeter style
 # For an entry
-get_style = lambda num, name, img_path, launch_cmd: f"""
+get_shortcut_style = lambda num, name, img_path, launch_cmd: f"""
 [App{num}Box]
 Meter=Shape
 Y={"24R" if num != 1 else 0}
@@ -47,21 +47,72 @@ Text="{name}"
 
 """
 
+get_icon_style = lambda menu,i: f"""
+
+[{menu}Icon]
+Meter=Image
+Y=3
+X={"0" if i == 0 else "25R"}
+H=#buttonSize#
+ImageAlpha=130
+ImageName=#@#Images\{menu}.png
+LeftMouseDownAction=[!ActivateConfig #widgetRoot# {menu}.ini][!ActivateConfig #iconRoot# {menu}.ini][!SetWallpaper #@#Wallpapers\{menu}.jpg Fill]
+
+"""
+
+get_selected_icon_style = lambda menu, i: f"""
+
+[{menu}Icon]
+Meter=Image
+Y=3
+X={"0" if i == 0 else "25R"}
+H=#buttonSize#
+ImageName=#@#Images\{menu}.png
+
+"""
+
 def writeBoilerplate(menuFile):
-    with open('boilerplate.ini', 'r') as boilerplate:
+    with open('widget_boilerplate.ini', 'r') as boilerplate:
         menuFile.writelines(boilerplate.readlines())
 
-def writeIcons(catalog, menuFile):
+def writeShortcuts(catalog, menuFile):
     num = 1
     entry = catalog.readline()
     while entry and entry[0] == '-':
         entry = entry[1:].split(',')
-        menuFile.write(get_style(num, entry[0], entry[1], entry[2]))
+        menuFile.write(get_shortcut_style(num, entry[0], entry[1], entry[2]))
         print("Added", entry[0], "!")
         num += 1
         entry = catalog.readline()
 
+def writeIcon(menuName, tabList):
+    with open(f"IconBar/{menuName}.ini", 'w') as iconBar:
+        # Write boilerplate
+        with open("icon_boilerplate.ini", 'r') as boilerplate:
+            print(f"Writing iconBar Boilerplate for {menuName}")
+            iconBar.writelines(boilerplate.readlines())
+
+        i = 0        
+        while i < len(tabList):
+            tab = tabList[i]
+            if tab == menuName:
+                iconBar.write(get_selected_icon_style(tab, i))
+            else:
+                iconBar.write(get_icon_style(tab, i))
+            i += 1
+
+
 print("opening catalog")
+print("Reading Tabs")
+tabs = []
+
+with open("Shortcut-Catalog", 'r') as catalog:
+    tabs = [entry[1:].strip() for entry in catalog.readlines() if entry[0] == '+']
+
+for tab in tabs:
+    print(f"Writing iconBar for {tab}...")
+    writeIcon(tab, tabs)
+
 with open("Shortcut-Catalog",'r') as catalog:
     entry = catalog.readline()
     while entry: # entry is not Empty (EOF)
@@ -78,5 +129,5 @@ with open("Shortcut-Catalog",'r') as catalog:
             writeBoilerplate(menuFile)
 
             print("Writing Shortcuts...")
-            writeIcons(catalog, menuFile)
+            writeShortcuts(catalog, menuFile)
             entry = catalog.readline()
