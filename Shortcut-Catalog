@@ -1,5 +1,6 @@
-+Test1
--Notepad,notepad.png,notepad.exe
++Section1
+-App1Name,PathToImage,PathToShortcut
+-App2Name,PathToImage,PathToShortcut
 
-+Test2
--Explorer,explorer.png,explorer.exe
++Section2
+-App1Name,PathToImage,PathToShortcut
