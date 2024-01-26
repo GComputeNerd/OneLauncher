@@ -1,6 +1,6 @@
 from os.path import isfile
 
-def checkImage(type, name):
+def checkImage(type, img_path):
     """
     Checks if the required asset exists, if not returns a default value.
 
@@ -13,11 +13,12 @@ def checkImage(type, name):
 
     if type == 'icon':
         root = "#@#\IconBar\\"
+        img_path = img_path + ".png"
     else:
         root = "#@#\Shortcuts\\"
     
-    if isfile(root.replace("#@#","@Resources") + name + ".png"):
-        return root + name + ".png"
+    if isfile(root.replace("#@#","@Resources") + img_path):
+        return root + img_path
     else:
         return root + "Default.png"
 

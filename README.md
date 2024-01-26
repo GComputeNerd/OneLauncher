@@ -73,3 +73,37 @@ To add images for the icons and tabs, go to where your rainmeter skins are locat
 Open the `@Resources` folder.
 
 ![OneLauncher Resources Folder](Screenshots/OneLauncher%20Resources%20Folder.png)
+
+To add Images to the IconBar. Make a png file with the name of the section, and put it in the IconBar folder. 
+
+```
++Test1
+-Notepad,notepad.png,notepad.exe
+
++Test2
+-Explorer,explorer.png,explorer.exe
+```
+
+Here, we have 2 sections. Test1 and Test2. So we go to the @Resources\IconBar folder and add corresponding files.
+
+![IconBar folder](Screenshots/IconBar%20Folder.png)
+
+If we run the `shortcut_gen.py` script again !
+
+![Demo IconBar](Screenshots/Demo%20IconBar.png)
+
+We have successfully added icons to the IconBar !
+
+Now, for the shortcuts. Go back to the `@Resources` folder, and go to the `Shortcuts` folder.
+
+This is where you'll add your shortcut icons.
+
+![Shortcuts Folder](Screenshots/Shortcuts%20Folder.png)
+
+This has to be the same name as we wrote in our `Shortcut-Catalog`. Now if we run the `shortcut_gen.py` script again.
+
+![Notepad Icon Example](Screenshots/Demo%20Notepad%20Icon.png)
+
+![Explorer Icon Example](Screenshots/Demo%20Explorer%20Icon.png)
+
+This is how to set up the Menu ! Now if you click on the buttons, it will run the program !
