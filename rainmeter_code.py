@@ -77,7 +77,7 @@ Y=8r
 X=15
 W=#buttonSize#
 H=#buttonSize#
-ImageName=#@#\Shortcuts\{img_path}
+ImageName={checkImage("Shortcut", img_path)}
 
 [App{num}Text]
 Meter=String
@@ -95,7 +95,7 @@ Y=3
 X={"0" if i == 0 else "25R"}
 H=#buttonSize#
 ImageAlpha=130
-ImageName=#@#Images\{menu}.png
+ImageName={checkImage("icon", menu)}
 LeftMouseDownAction=[!ActivateConfig #widgetRoot# {menu}.ini][!ActivateConfig #iconRoot# {menu}.ini]
 """
 
@@ -106,14 +106,14 @@ Meter=Image
 Y=3
 X={"0" if i == 0 else "25R"}
 H=#buttonSize#
-ImageName=#@#Images\{menu}.png
+ImageName={checkImage("icon", menu)}
 """
 
 bounding_box = lambda n: f"""
 
 [BoundingBox]
 Meter=Image
-SolidColor=0,0,0,1
+SolidColor=0,0,0,100
 W={40*n + 25*(n-1)}
 H=45
 """
