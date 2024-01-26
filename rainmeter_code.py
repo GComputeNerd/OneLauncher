@@ -113,7 +113,7 @@ bounding_box = lambda n: f"""
 
 [BoundingBox]
 Meter=Image
-SolidColor=0,0,0,100
+SolidColor=0,0,0,1
 W={40*n + 25*(n-1)}
 H=45
 """

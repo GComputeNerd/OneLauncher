@@ -42,3 +42,24 @@ When you start a line with a `-`, that means you are cataloging an app shortcut 
 ```
 -Notepad,notepad.png,notepad.exe
 ```
+
+Let's use this as a demo `Shortcut-Catalog`
+
+```
++Test1
+-Notepad,notepad.png,notepad.exe
+
++Test2
+-Explorer,explorer.png,explorer.exe
+```
+Now, run the `shortcut_gen.py` script.
+
+We get the following.
+
+![Notepad Example](Screenshots/Demo%20Notepad.png)
+
+If you click on the Notepad button. It should now open Notepad, and if we click on the other tab icon, we get this.
+
+![Explorer Example](Screenshots/Demo%20Explorer.png)
+
+So now you know how to add tabs and shortcuts! Now you just need to add images.
