@@ -63,3 +63,13 @@ If you click on the Notepad button. It should now open Notepad, and if we click 
 ![Explorer Example](Screenshots/Demo%20Explorer.png)
 
 So now you know how to add tabs and shortcuts! Now you just need to add images.
+
+### Part 3 : Adding The Images
+
+To add images for the icons and tabs, go to where your rainmeter skins are located. Then open OneLauncher.
+
+![OneLauncher Root Files](Screenshots/OneLauncher%20Root%20Files.png)
+
+Open the `@Resources` folder.
+
+![OneLauncher Resources Folder](Screenshots/OneLauncher%20Resources%20Folder.png)
