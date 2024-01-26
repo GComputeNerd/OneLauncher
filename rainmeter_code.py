@@ -12,7 +12,7 @@ def checkImage(type, name):
     root = ""
 
     if type == 'icon':
-        root = "#@#\Images\\"
+        root = "#@#\IconBar\\"
     else:
         root = "#@#\Shortcuts\\"
     
