@@ -1,3 +1,26 @@
+from os.path import isfile
+
+def checkImage(type, name):
+    """
+    Checks if the required asset exists, if not returns a default value.
+
+    Arguments:
+        type (string): Icon or Widget
+        name (string): Name of required asset
+    """
+
+    root = ""
+
+    if type == 'icon':
+        root = "#@#\Images\\"
+    else:
+        root = "#@#\Shortcuts\\"
+    
+    if isfile(root.replace("#@#","@Resources") + name + ".png"):
+        return root + name + ".png"
+    else:
+        return root + "Default.png"
+
 icon_boilerplate = lambda menu: f"""[Rainmeter]
 AccurateText=1
 
