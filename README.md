@@ -88,6 +88,8 @@ Here, we have 2 sections. Test1 and Test2. So we go to the @Resources\IconBar fo
 
 ![IconBar folder](Screenshots/IconBar%20Folder.png)
 
+**These files HAVE to be .png, and have the same name as the Section**
+
 If we run the `shortcut_gen.py` script again !
 
 ![Demo IconBar](Screenshots/Demo%20IconBar.png)
@@ -107,3 +109,33 @@ This has to be the same name as we wrote in our `Shortcut-Catalog`. Now if we ru
 ![Explorer Icon Example](Screenshots/Demo%20Explorer%20Icon.png)
 
 This is how to set up the Menu ! Now if you click on the buttons, it will run the program !
+
+### Part 4 : Wallpaper Switching
+
+You can set a unique Wallpaper for each tab. Go back to the `@Resources` folder.
+
+![OneLauncher Resources Folder](Screenshots/OneLauncher%20Resources%20Folder.png)
+
+If you go into the `Wallpapers` folder. You can add a wallpaper to different tabs as follows. In our example above
+
+```
++Test1
+-Notepad,notepad.png,notepad.exe
+
++Test2
+-Explorer,explorer.png,explorer.exe
+```
+
+We have 2 sections `Test1`, and `Test2`. So we add files to the `Wallpapers` folder as follows.
+
+![OneLauncher Wallpapers Folder](Screenshots/Wallpapers%20Folder.png)
+
+**These files HAVE to be .jpg, and have the same name as the Section**
+
+Now if we run `shortcut_gen.py`
+
+![Test1](Screenshots/Test1.png)
+
+![Test2](Screenshots/Test2.png)
+
+Congratulations ! You have successfully setup OneLauncher!
