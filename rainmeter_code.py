@@ -1,5 +1,4 @@
 icon_boilerplate = lambda menu: f"""[Rainmeter]
-Update=1000
 AccurateText=1
 
 [Metadata]
@@ -18,7 +17,7 @@ IfEqualAction=!SetWallpaper #@#Wallpapers\{menu}.jpg Fill
 UpdateDivider=-1"""
 
 widget_boilerplate = f"""[Rainmeter]
-Update=150
+Update=1000
 AccurateText=1
 
 [Metadata]
