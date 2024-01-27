@@ -1,0 +1,3 @@
+- [ ] Find Optimizations
+- [ ] Performance vs Visual Option
+- [ ] Option to disable hover animations on shortcuts
